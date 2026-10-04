@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="en" class="dark"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0E0E1A',
+            surface: '#171728',
+            'surface-2': '#20203A',
+            border: '#2A2A45',
+            text: '#F4F3FF',
+            'text-muted': '#9A98B8',
+            violet: '#7C5CFF',
+            lime: '#C6F432',
+            pink: '#FF5CA8',
+            amber: '#FFB547',
+            cyan: '#3FD8FF',
+            ink: '#0E0E1A'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+            display: ['"Space Grotesk"', 'sans-serif'],
+          },
+          backgroundImage: {
+            'grad-hero': 'linear-gradient(135deg, #7C5CFF 0%, #FF5CA8 100%)',
+            'grad-lime': 'linear-gradient(135deg, #C6F432 0%, #3FD8FF 100%)',
+            'chart-fill': 'linear-gradient(180deg, rgba(124,92,255,0.2) 0%, rgba(124,92,255,0) 100%)',
+          },
+          boxShadow: {
+            'glow': '0 8px 32px rgba(124,92,255,0.18)',
+          },
+          borderRadius: {
+            'card': '20px',
+            'btn': '14px',
+            'modal': '24px',
+          },
+          spacing: {
+            '1': '4px',
+            '2': '8px',
+            '3': '12px',
+            '4': '16px',
+            '5': '20px',
+            '6': '24px',
+            '8': '32px',
+            '12': '48px',
+          },
+          letterSpacing: {
+            'tight-num': '-0.02em',
+            'label': '0.08em',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0E0E1A;
+      color: #F4F3FF;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Hide scrollbar for clean UI */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #20203A;
+      border-radius: 999px;
+    }
+    
+    .chart-grid line {
+      stroke: #2A2A45;
+      stroke-width: 1;
+    }
+    .chart-label {
+      fill: #9A98B8;
+      font-size: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen bg-bg flex overflow-hidden" data-sd-id="1">
+    
+    <!-- Sidebar -->
+    <aside class="w-[240px] flex-shrink-0 border-r border-border bg-bg flex flex-col hidden lg:flex relative z-10" data-sd-id="2">
+      <!-- Logo -->
+      <div class="h-20 flex items-center px-6" data-sd-id="3">
+        <div class="flex items-center gap-2 text-violet font-display font-bold text-2xl tracking-tight" data-sd-id="4">
+          <iconify-icon icon="ph:heartbeat-fill" class="text-3xl"></iconify-icon>
+          Pulse
+        </div>
+      </div>
+      
+      <!-- Nav -->
+      <nav class="flex-1 px-4 py-4 flex flex-col gap-2 overflow-y-auto" data-sd-id="5">
+        <a href="#" id="nav-dashboard" class="flex items-center gap-3 px-4 py-3 rounded-full bg-violet text-white font-medium transition-colors" data-sd-id="6">
+          <iconify-icon icon="ph:squares-four-duotone" class="text-xl"></iconify-icon>
+          Dashboard
+        </a>
+        <a href="#" id="nav-transactions" class="flex items-center gap-3 px-4 py-3 rounded-full text-text-muted hover:text-text hover:bg-surface-2 transition-colors" data-sd-id="7">
+          <iconify-icon icon="ph:list-bullets-duotone" class="text-xl"></iconify-icon>
+          Transactions
+        </a>
+        <a href="#" id="nav-accounts" class="flex items-center gap-3 px-4 py-3 rounded-full text-text-muted hover:text-text hover:bg-surface-2 transition-colors" data-sd-id="8">
+          <iconify-icon icon="ph:wallet-duotone" class="text-xl"></iconify-icon>
+          Accounts
+        </a>
+        <a href="#" id="nav-payments" class="flex items-center gap-3 px-4 py-3 rounded-full text-text-muted hover:text-text hover:bg-surface-2 transition-colors" data-sd-id="9">
+          <iconify-icon icon="ph:paper-plane-tilt-duotone" class="text-xl"></iconify-icon>
+          Payments
+        </a>
+        <a href="#" id="nav-goals" class="flex items-center gap-3 px-4 py-3 rounded-full text-text-muted hover:text-text hover:bg-surface-2 transition-colors" data-sd-id="10">
+          <iconify-icon icon="ph:target-duotone" class="text-xl"></iconify-icon>
+          Goals
+        </a>
+        <a href="#" id="nav-settings" class="flex items-center gap-3 px-4 py-3 rounded-full text-text-muted hover:text-text hover:bg-surface-2 transition-colors" data-sd-id="11">
+          <iconify-icon icon="ph:gear-duotone" class="text-xl"></iconify-icon>
+          Settings
+        </a>
+      </nav>
+      
+      <!-- User -->
+      <div class="p-4 mt-auto border-t border-border" data-sd-id="12">
+        <div class="flex items-center justify-between px-2 py-2 rounded-full hover:bg-surface-2 cursor-pointer transition-colors" data-sd-id="13">
+          <div class="flex items-center gap-3" data-sd-id="14">
+            <div class="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-xl border border-border" data-sd-id="15">
+              😎
+            </div>
+            <span class="font-medium" data-sd-id="16">Alex</span>
+          </div>
+          <button id="btn-logout" class="text-text-muted hover:text-pink p-2 transition-colors" aria-label="Log out" data-sd-id="17">
+            <iconify-icon icon="ph:sign-out-bold"></iconify-icon>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 h-screen overflow-y-auto relative" data-sd-id="18">
+      <div class="max-w-[1280px] mx-auto px-5 py-6 lg:px-8 lg:py-8 flex flex-col gap-6" data-sd-id="19">
+        
+        <!-- Top Row Header -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between gap-4" data-sd-id="20">
+          <div data-sd-id="21">
+            <h1 class="text-2xl lg:text-[32px] font-display font-bold" data-sd-id="22">Hey Alex 👋</h1>
+            <p class="text-text-muted mt-1" data-sd-id="23">Here's your money this month</p>
+          </div>
+          
+          <div class="flex items-center gap-4" data-sd-id="24">
+            <div class="relative hidden md:block" data-sd-id="25">
+              <iconify-icon icon="ph:magnifying-glass" class="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted text-lg"></iconify-icon>
+              <input type="text" placeholder="Search..." class="w-64 h-[44px] bg-surface-2 rounded-btn pl-10 pr-4 outline-none focus:ring-2 focus:ring-violet transition-all text-sm placeholder-text-muted" data-sd-id="26">
+            </div>
+            <button id="btn-notifications" class="w-[44px] h-[44px] rounded-btn bg-surface-2 flex items-center justify-center text-text-muted hover:text-text transition-colors relative" data-sd-id="27">
+              <iconify-icon icon="ph:bell-duotone" class="text-xl"></iconify-icon>
+              <span class="absolute top-2 right-2 w-2 h-2 bg-pink rounded-full" data-sd-id="28"></span>
+            </button>
+            <button id="btn-add-tx" class="h-[44px] px-5 rounded-btn bg-grad-hero text-white font-medium flex items-center gap-2 shadow-glow hover:-translate-y-0.5 transition-transform" data-sd-id="29">
+              <iconify-icon icon="ph:plus-bold"></iconify-icon>
+              Add transaction
+            </button>
+          </div>
+        </header>
+
+        <!-- Row 1: KPI Tiles -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" data-sd-id="30">
+          <!-- Hero Balance -->
+          <div class="col-span-1 bg-grad-hero p-6 rounded-card shadow-glow relative overflow-hidden" data-sd-id="31">
+            <div class="relative z-10 flex flex-col h-full justify-between" data-sd-id="33">
+              <div data-sd-id="34">
+                <p class="text-[12px] uppercase tracking-label font-medium text-white/80" data-sd-id="35">Total balance</p>
+                <h2 class="text-[40px] lg:text-[48px] font-display font-bold tracking-tight-num mt-2 tabular-nums" data-sd-id="36">$12,742.50</h2>
+              </div>
+              <div class="mt-4 flex items-center" data-sd-id="37">
+                <span class="inline-flex items-center gap-1 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium text-white" data-sd-id="38">
+                  <iconify-icon icon="ph:trend-up-bold"></iconify-icon>
+                  +4.2% vs last month
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Income -->
+          <div class="bg-surface border border-border p-6 rounded-card flex flex-col justify-between" data-sd-id="39">
+            <div data-sd-id="40">
+              <p class="text-[12px] uppercase tracking-label text-text-muted font-medium" data-sd-id="41">Income this month</p>
+              <h3 class="text-[32px] font-display font-bold tracking-tight-num mt-2 tabular-nums" data-sd-id="42">$5,200</h3>
+            </div>
+            <div class="mt-4" data-sd-id="43">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-surface-2 rounded-full text-[13px] font-medium text-lime" data-sd-id="44">
+                <iconify-icon icon="ph:caret-up-fill"></iconify-icon>
+                +14%
+              </span>
+            </div>
+          </div>
+
+          <!-- Expenses -->
+          <div class="bg-surface border border-border p-6 rounded-card flex flex-col justify-between" data-sd-id="45">
+            <div data-sd-id="46">
+              <p class="text-[12px] uppercase tracking-label text-text-muted font-medium" data-sd-id="47">Expenses this month</p>
+              <h3 class="text-[32px] font-display font-bold tracking-tight-num mt-2 tabular-nums" data-sd-id="48">$2,846</h3>
+            </div>
+            <div class="mt-4" data-sd-id="49">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-surface-2 rounded-full text-[13px] font-medium text-pink" data-sd-id="50">
+                <iconify-icon icon="ph:caret-down-fill"></iconify-icon>
+                -12%
+              </span>
+            </div>
+          </div>
+
+          <!-- Savings Rate -->
+          <div class="bg-surface border border-border p-6 rounded-card flex flex-col justify-between" data-sd-id="51">
+            <div data-sd-id="52">
+              <p class="text-[12px] uppercase tracking-label text-text-muted font-medium" data-sd-id="53">Savings rate</p>
+              <h3 class="text-[32px] font-display font-bold tracking-tight-num mt-2 tabular-nums" data-sd-id="54">42%</h3>
+            </div>
+            <div class="mt-4 w-full h-2 bg-surface-2 rounded-full overflow-hidden" data-sd-id="55">
+              <div class="h-full bg-lime rounded-full" style="width: 42%" data-sd-id="56"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Insight Chips -->
+        <div class="flex flex-wrap gap-3" data-sd-id="57">
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-2 rounded-full text-sm font-medium border border-border" data-sd-id="58">
+            <span class="text-lg" data-sd-id="59">🍔</span> Food spend down 12% <span class="text-amber text-lg" data-sd-id="60">🔥</span>
+          </div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-2 rounded-full text-sm font-medium border border-border" data-sd-id="61">
+            <span class="text-lg" data-sd-id="62">🎮</span> Entertainment up 30% <span class="text-lg" data-sd-id="63">👀</span>
+          </div>
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-2 rounded-full text-sm font-medium border border-border text-amber" data-sd-id="64">
+            <span class="text-lg" data-sd-id="65">⏰</span> 2 bills due this week
+          </div>
+        </div>
+
+        <!-- Row 3: Full Width Balance Chart -->
+        <div class="bg-surface border border-border p-6 rounded-card w-full">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
+            <h3 class="font-medium">Balance over time</h3>
+            <div class="flex items-center bg-surface-2 p-1 rounded-btn">
+              <button class="px-4 py-1.5 rounded-btn bg-surface text-text text-sm font-medium shadow-sm border border-border">90D</button>
+              <button class="px-4 py-1.5 rounded-btn text-text-muted hover:text-text text-sm font-medium transition-colors">30D</button>
+              <button class="px-4 py-1.5 rounded-btn text-text-muted hover:text-text text-sm font-medium transition-colors">7D</button>
+            </div>
+          </div>
+          <div class="h-[280px] w-full relative">
+            <svg viewBox="0 0 1200 280" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+              <g class="chart-grid">
+                <line x1="0" y1="40" x2="1200" y2="40" stroke-dasharray="4 4"></line>
+                <line x1="0" y1="100" x2="1200" y2="100" stroke-dasharray="4 4"></line>
+                <line x1="0" y1="160" x2="1200" y2="160" stroke-dasharray="4 4"></line>
+                <line x1="0" y1="220" x2="1200" y2="220"></line>
+              </g>
+              <g class="chart-labels">
+                <text x="0" y="260" class="chart-label">Jul</text>
+                <text x="400" y="260" class="chart-label" text-anchor="middle">Aug</text>
+                <text x="800" y="260" class="chart-label" text-anchor="middle">Sep</text>
+                <text x="1200" y="260" class="chart-label" text-anchor="end">Oct</text>
+              </g>
+              <path d="M0,200 Q150,180 300,160 T600,100 T900,120 T1200,60 L1200,220 L0,220 Z" fill="url(#area-grad)"></path>
+              <path d="M0,200 Q150,180 300,160 T600,100 T900,120 T1200,60" fill="none" stroke="#7C5CFF" stroke-width="2"></path>
+              <circle cx="600" cy="100" r="5" fill="#7C5CFF" stroke="#0E0E1A" stroke-width="2"></circle>
+              
+              <defs>
+                <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7C5CFF" stop-opacity="0.3"></stop>
+                  <stop offset="100%" stop-color="#7C5CFF" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="absolute left-[50%] top-[60px] -translate-x-1/2 bg-surface-2 px-3 py-1.5 rounded-full text-xs font-medium border border-border shadow-lg flex items-center gap-1 pointer-events-none">
+              $11,402 <span class="text-text-muted">Aug 15</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: Bar Chart & Donut (2-1 Grid) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5" data-sd-id="101">
+          <!-- Bar Chart -->
+          <div class="lg:col-span-2 bg-surface border border-border p-6 rounded-card" data-sd-id="102">
+             <div class="flex justify-between items-center mb-6" data-sd-id="103">
+              <h3 class="font-medium" data-sd-id="104">Income vs expenses</h3>
+              <div class="flex items-center gap-4 text-xs" data-sd-id="105">
+                <div class="flex items-center gap-1.5" data-sd-id="106"><span class="w-3 h-3 rounded-sm bg-lime" data-sd-id="107"></span> Income</div>
+                <div class="flex items-center gap-1.5" data-sd-id="108"><span class="w-3 h-3 rounded-sm bg-pink" data-sd-id="109"></span> Expenses</div>
+              </div>
+            </div>
+            <div class="h-[240px] w-full flex items-end justify-between px-4 pt-4 relative border-b border-border" data-sd-id="110">
+              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-8" data-sd-id="111">
+                 <div class="border-b border-border border-dashed w-full opacity-50" data-sd-id="112"></div>
+                 <div class="border-b border-border border-dashed w-full opacity-50" data-sd-id="113"></div>
+                 <div class="border-b border-border border-dashed w-full opacity-50" data-sd-id="114"></div>
+              </div>
+              
+              <div class="flex gap-1.5 items-end h-[180px] relative z-10 w-14 group" data-sd-id="115">
+                <div class="w-1/2 bg-lime rounded-t-[4px] h-[60%] group-hover:opacity-80 transition-opacity" data-sd-id="116"></div>
+                <div class="w-1/2 bg-pink rounded-t-[4px] h-[50%] group-hover:opacity-80 transition-opacity" data-sd-id="117"></div>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-text-muted" data-sd-id="118">Apr</span>
+              </div>
+              <div class="flex gap-1.5 items-end h-[180px] relative z-10 w-14" data-sd-id="119">
+                <div class="w-1/2 bg-lime rounded-t-[4px] h-[75%]" data-sd-id="120"></div>
+                <div class="w-1/2 bg-pink rounded-t-[4px] h-[55%]" data-sd-id="121"></div>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-text-muted" data-sd-id="122">May</span>
+              </div>
+              <div class="flex gap-1.5 items-end h-[180px] relative z-10 w-14" data-sd-id="123">
+                <div class="w-1/2 bg-lime rounded-t-[4px] h-[65%]" data-sd-id="124"></div>
+                <div class="w-1/2 bg-pink rounded-t-[4px] h-[80%]" data-sd-id="125"></div>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-text-muted" data-sd-id="126">Jun</span>
+              </div>
+              <div class="flex gap-1.5 items-end h-[180px] relative z-10 w-14" data-sd-id="127">
+                <div class="w-1/2 bg-lime rounded-t-[4px] h-[90%]" data-sd-id="128"></div>
+                <div class="w-1/2 bg-pink rounded-t-[4px] h-[60%]" data-sd-id="129"></div>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-text-muted" data-sd-id="130">Jul</span>
+              </div>
+              <div class="flex gap-1.5 items-end h-[180px] relative z-10 w-14" data-sd-id="131">
+                <div class="w-1/2 bg-lime rounded-t-[4px] h-[70%]" data-sd-id="132"></div>
+                <div class="w-1/2 bg-pink rounded-t-[4px] h-[45%]" data-sd-id="133"></div>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-text-muted" data-sd-id="134">Aug</span>
+              </div>
+              <div class="flex gap-1.5 items-end h-[180px] relative z-10 w-14" data-sd-id="135">
+                <div class="w-1/2 bg-lime rounded-t-[4px] h-[85%]" data-sd-id="136"></div>
+                <div class="w-1/2 bg-pink rounded-t-[4px] h-[50%]" data-sd-id="137"></div>
+                <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[12px] text-text-muted" data-sd-id="138">Sep</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Donut -->
+          <div class="bg-surface border border-border p-6 rounded-card flex flex-col" data-sd-id="77">
+            <h3 class="font-medium mb-4" data-sd-id="78">Spending by category</h3>
+            <div class="relative flex-1 flex items-center justify-center min-h-[160px]" data-sd-id="79">
+              <svg viewBox="0 0 200 200" class="w-[160px] h-[160px] -rotate-90" data-sd-id="80">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#2A2A45" stroke-width="16"></circle>
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#7C5CFF" stroke-width="16" stroke-dasharray="502" stroke-dashoffset="300"></circle>
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#FF5CA8" stroke-width="16" stroke-dasharray="502" stroke-dashoffset="450"></circle>
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#C6F432" stroke-width="16" stroke-dasharray="502" stroke-dashoffset="480"></circle>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center" data-sd-id="81">
+                <p class="text-[10px] uppercase tracking-label text-text-muted" data-sd-id="82">Total</p>
+                <p class="font-display font-bold text-xl tabular-nums" data-sd-id="83">$2,846</p>
+              </div>
+            </div>
+            <div class="mt-6 flex flex-col gap-3" data-sd-id="84">
+              <div class="flex items-center justify-between text-sm" data-sd-id="85">
+                <div class="flex items-center gap-2" data-sd-id="86"><span class="w-2 h-2 rounded-full bg-violet" data-sd-id="87"></span> 🍔 Food</div>
+                <span class="font-medium" data-sd-id="88">40%</span>
+              </div>
+              <div class="flex items-center justify-between text-sm" data-sd-id="89">
+                <div class="flex items-center gap-2" data-sd-id="90"><span class="w-2 h-2 rounded-full bg-pink" data-sd-id="91"></span> 🚌 Transport</div>
+                <span class="font-medium" data-sd-id="92">25%</span>
+              </div>
+              <div class="flex items-center justify-between text-sm" data-sd-id="93">
+                <div class="flex items-center gap-2" data-sd-id="94"><span class="w-2 h-2 rounded-full bg-lime" data-sd-id="95"></span> 🛍️ Shopping</div>
+                <span class="font-medium" data-sd-id="96">15%</span>
+              </div>
+              <div class="flex items-center justify-between text-sm text-text-muted" data-sd-id="97">
+                <div class="flex items-center gap-2" data-sd-id="98"><span class="w-2 h-2 rounded-full bg-surface-2" data-sd-id="99"></span> Other</div>
+                <span class="font-medium" data-sd-id="100">20%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 5: Transactions Table & Bills -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          
+          <!-- Transactions Table -->
+          <div class="lg:col-span-2 bg-surface border border-border rounded-card flex flex-col overflow-hidden" data-sd-id="174">
+            <div class="p-6 border-b border-border flex justify-between items-center" data-sd-id="175">
+              <h3 class="font-medium" data-sd-id="176">Recent transactions</h3>
+              <a href="#" id="link-all-tx-top" class="text-sm text-violet hover:underline">See all</a>
+            </div>
+            <div class="flex-1 flex flex-col" data-sd-id="178">
+              <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 border-b border-border text-[12px] uppercase tracking-label text-text-muted" data-sd-id="179">
+                <div class="col-span-5" data-sd-id="180">Description</div>
+                <div class="col-span-3" data-sd-id="181">Category</div>
+                <div class="col-span-2" data-sd-id="182">Date</div>
+                <div class="col-span-2 text-right" data-sd-id="183">Amount</div>
+              </div>
+              
+              <div class="flex flex-col flex-1" data-sd-id="184">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-surface-2 transition-colors cursor-pointer border-b md:border-b-0 border-border md:h-[64px]" data-sd-id="185">
+                  <div class="col-span-1 md:col-span-5 flex items-center gap-3" data-sd-id="186">
+                    <div class="w-9 h-9 rounded-full bg-surface-2 flex items-center justify-center text-base shrink-0" data-sd-id="187">🏢</div>
+                    <div data-sd-id="188">
+                      <p class="font-medium text-sm" data-sd-id="189">Acme Corp Salary</p>
+                      <p class="text-xs text-text-muted md:hidden mt-0.5" data-sd-id="190">Income • Today</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex col-span-3" data-sd-id="191">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-2 rounded-full text-[11px] font-medium text-text-muted">
+                      💰 Income
+                    </span>
+                  </div>
+                  <div class="hidden md:block col-span-2 text-xs text-text-muted" data-sd-id="193">Today, 09:00</div>
+                  <div class="col-span-1 md:col-span-2 text-right font-display font-semibold text-lime ml-auto md:ml-0 tabular-nums" data-sd-id="194">+$3,200.00</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-surface-2 transition-colors cursor-pointer border-b md:border-b-0 border-border md:h-[64px]" data-sd-id="195">
+                  <div class="col-span-1 md:col-span-5 flex items-center gap-3" data-sd-id="196">
+                    <div class="w-9 h-9 rounded-full bg-surface-2 flex items-center justify-center text-base shrink-0" data-sd-id="197">🛒</div>
+                    <div data-sd-id="198">
+                      <p class="font-medium text-sm" data-sd-id="199">Whole Foods Market</p>
+                      <p class="text-xs text-text-muted md:hidden mt-0.5" data-sd-id="200">Food • Yesterday</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex col-span-3" data-sd-id="201">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-2 rounded-full text-[11px] font-medium text-text-muted">
+                      🍔 Food
+                    </span>
+                  </div>
+                  <div class="hidden md:block col-span-2 text-xs text-text-muted" data-sd-id="203">Yesterday</div>
+                  <div class="col-span-1 md:col-span-2 text-right font-display font-medium ml-auto md:ml-0 tabular-nums" data-sd-id="204">−$142.50</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-surface-2 transition-colors cursor-pointer border-b md:border-b-0 border-border md:h-[64px]" data-sd-id="205">
+                  <div class="col-span-1 md:col-span-5 flex items-center gap-3" data-sd-id="206">
+                    <div class="w-9 h-9 rounded-full bg-surface-2 flex items-center justify-center text-base shrink-0" data-sd-id="207">🚕</div>
+                    <div data-sd-id="208">
+                      <p class="font-medium text-sm" data-sd-id="209">Uber Rides</p>
+                      <p class="text-xs text-text-muted md:hidden mt-0.5" data-sd-id="210">Transport • Sep 24</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex col-span-3" data-sd-id="211">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-2 rounded-full text-[11px] font-medium text-text-muted">
+                      🚌 Transport
+                    </span>
+                  </div>
+                  <div class="hidden md:block col-span-2 text-xs text-text-muted" data-sd-id="213">Sep 24</div>
+                  <div class="col-span-1 md:col-span-2 text-right font-display font-medium ml-auto md:ml-0 tabular-nums" data-sd-id="214">−$24.90</div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-surface-2 transition-colors cursor-pointer border-b md:border-b-0 border-border md:h-[64px]">
+                  <div class="col-span-1 md:col-span-5 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-surface-2 flex items-center justify-center text-base shrink-0">🎮</div>
+                    <div>
+                      <p class="font-medium text-sm">PlayStation Store</p>
+                      <p class="text-xs text-text-muted md:hidden mt-0.5">Entertainment • Sep 22</p>
+                    </div>
+                  </div>
+                  <div class="hidden md:flex col-span-3">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-2 rounded-full text-[11px] font-medium text-text-muted">
+                      🎮 Entertainment
+                    </span>
+                  </div>
+                  <div class="hidden md:block col-span-2 text-xs text-text-muted">Sep 22</div>
+                  <div class="col-span-1 md:col-span-2 text-right font-display font-medium ml-auto md:ml-0 tabular-nums">−$69.99</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bills -->
+          <div class="bg-surface border border-border p-6 rounded-card flex flex-col" data-sd-id="139">
+            <div class="flex justify-between items-center mb-6" data-sd-id="140">
+              <h3 class="font-medium" data-sd-id="141">Upcoming bills</h3>
+              <a href="#" id="link-all-bills" class="text-sm text-violet hover:underline" data-sd-id="142">See all</a>
+            </div>
+            <div class="flex flex-col gap-4 flex-1" data-sd-id="143">
+              
+              <div class="flex items-center justify-between group" data-sd-id="144">
+                <div class="flex items-center gap-3" data-sd-id="145">
+                  <div class="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-lg border border-border" data-sd-id="146">🏠</div>
+                  <div data-sd-id="147">
+                    <p class="font-medium text-sm" data-sd-id="148">Rent</p>
+                    <div class="flex items-center gap-2 mt-0.5" data-sd-id="149">
+                      <span class="text-[10px] uppercase tracking-label font-medium text-amber" data-sd-id="150">Upcoming</span>
+                      <span class="text-xs text-text-muted" data-sd-id="151">in 3 days</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right flex flex-col items-end gap-1" data-sd-id="152">
+                  <span class="font-display font-semibold tabular-nums" data-sd-id="153">$1,200</span>
+                  <button class="text-[11px] font-medium text-violet opacity-0 group-hover:opacity-100 transition-opacity" data-sd-id="154">Mark paid</button>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between" data-sd-id="155">
+                <div class="flex items-center gap-3" data-sd-id="156">
+                  <div class="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-lg border border-border" data-sd-id="157">🎵</div>
+                  <div data-sd-id="158">
+                    <p class="font-medium text-sm" data-sd-id="159">Spotify</p>
+                    <div class="flex items-center gap-2 mt-0.5" data-sd-id="160">
+                      <span class="text-[10px] uppercase tracking-label font-medium text-lime" data-sd-id="161">Paid</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right" data-sd-id="162">
+                  <span class="font-display font-semibold text-text-muted tabular-nums" data-sd-id="163">$9.99</span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between group" data-sd-id="164">
+                <div class="flex items-center gap-3" data-sd-id="165">
+                  <div class="w-10 h-10 rounded-full bg-surface-2 flex items-center justify-center text-lg border border-border" data-sd-id="166">📱</div>
+                  <div data-sd-id="167">
+                    <p class="font-medium text-sm" data-sd-id="168">Phone</p>
+                    <div class="flex items-center gap-2 mt-0.5" data-sd-id="169">
+                      <span class="text-[10px] uppercase tracking-label font-medium text-pink" data-sd-id="170">Overdue</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-right flex flex-col items-end gap-1" data-sd-id="171">
+                  <span class="font-display font-semibold text-pink tabular-nums" data-sd-id="172">$65</span>
+                  <button class="text-[11px] font-medium text-violet opacity-0 group-hover:opacity-100 transition-opacity" data-sd-id="173">Pay now</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Spacer for scroll bottom -->
+        <div class="h-8" data-sd-id="237"></div>
+
+      </div>
+    </main>
+  </div>
+
+</body></html>

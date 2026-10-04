@@ -1,0 +1,7 @@
+.filtersDesktop { display: none; }
+.filtersButton { align-self: flex-start; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 16px; }
+@media (min-width: 768px) {
+  .filtersDesktop { display: block; }
+  .filtersButton:global(.btn) { display: none; } /* beats the global .btn display rule */
+}

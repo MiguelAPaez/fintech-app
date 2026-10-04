@@ -1,0 +1,28 @@
+.page { min-height: 100dvh; display: grid; grid-template-columns: 1fr; }
+.brand {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+  padding: 24px; background: var(--grad-hero); color: #fff;
+}
+.brand::after {
+  content: ''; position: absolute; width: 360px; height: 360px; right: -120px; bottom: -120px;
+  border-radius: 50%; background: var(--lime); filter: blur(90px); opacity: 0.35;
+}
+.logo { display: flex; align-items: center; gap: 8px; font: 700 24px var(--font-display); }
+.tagline { font-size: clamp(28px, 5vw, 48px); }
+.stickers { display: none; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.stickers span { padding: 8px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.2); font-weight: 600; }
+.note { position: relative; z-index: 1; font-size: 13px; opacity: 0.85; }
+.formSide { display: grid; place-items: center; padding: 32px 16px 48px; }
+.formBox { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 20px; }
+.title { font-size: 32px; }
+.strength { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.strength span { height: 4px; border-radius: 4px; background: var(--surface-2); }
+.weak span:nth-child(1) { background: var(--pink); }
+.ok span:nth-child(-n + 2) { background: var(--amber); }
+.strong span { background: var(--lime); }
+@media (min-width: 900px) {
+  .page { grid-template-columns: 1fr 1fr; }
+  .brand { padding: 48px; }
+  .stickers { display: flex; }
+}

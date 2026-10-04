@@ -1,0 +1,33 @@
+.kpis { display: grid; gap: 16px; grid-template-columns: 1fr; }
+.kpi { container-type: inline-size; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+.kpi > :not(:global(.card-emoji)) { position: relative; z-index: 1; }
+/* Font scales with the card's own width (cqi) so big balances never overflow. */
+.kpiValue { font: 700 clamp(22px, 16cqi, 32px) var(--font-display); letter-spacing: -0.02em; margin-top: 8px; }
+.hero:global(.card) { border: 0; background: var(--grad-hero); color: #fff; box-shadow: var(--glow); }
+.hero :global(.label) { color: rgba(255, 255, 255, 0.8); }
+.heroValue { font: 700 clamp(26px, 15cqi, 48px) var(--font-display); letter-spacing: -0.02em; margin-top: 8px; }
+.heroChip { align-self: flex-start; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.2); font-size: 14px; font-weight: 500; }
+.delta { align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); font-size: 13px; font-weight: 500; color: var(--text-muted); }
+.good { color: var(--lime); }
+.bad { color: var(--pink); }
+.info { color: var(--amber); }
+.meter { height: 8px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.meter > div { height: 100%; border-radius: inherit; background: var(--lime); transition: width 600ms var(--ease); }
+.insights { display: flex; flex-wrap: wrap; gap: 12px; }
+.split { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+.legend { display: flex; gap: 16px; font-size: 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; }
+.bills { display: flex; flex-direction: column; gap: 16px; }
+.bill { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.billInfo { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.billName { font-weight: 500; font-size: 14px; }
+.billRight { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.billAmount { font: 600 15px var(--font-display); }
+/* Compound selector beats the global .btn display rule. */
+.addBtn:global(.btn) { display: none; }
+@media (min-width: 600px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 768px) { .addBtn:global(.btn) { display: inline-flex; } }
+@media (min-width: 1024px) { .split { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); } }
+@media (min-width: 1200px) { .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (hover: hover) { .kpi:hover { transform: translateY(-2px); } }

@@ -1,0 +1,19 @@
+.summary { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.big { font: 700 28px var(--font-display); margin-top: 8px; }
+.good { color: var(--lime); }
+.bad { color: var(--pink); }
+.list { display: flex; flex-direction: column; gap: 12px; }
+.item {
+  display: grid; align-items: center; gap: 12px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'icon info amount' 'icon badge actions';
+}
+.item > :global(.emoji-circle) { grid-area: icon; }
+.info { grid-area: info; min-width: 0; }
+.name { font-weight: 600; }
+.amount { grid-area: amount; text-align: right; font: 600 16px var(--font-display); }
+.badgeCell { grid-area: badge; }
+.actions { grid-area: actions; display: flex; justify-content: flex-end; gap: 6px; }
+@media (min-width: 768px) {
+  .item { grid-template-columns: auto minmax(0, 1fr) auto auto auto; grid-template-areas: 'icon info badge amount actions'; }
+}

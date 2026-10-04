@@ -1,0 +1,12 @@
+.bar { display: flex; flex-direction: column; gap: 16px; }
+.row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; }
+.search {
+  flex: 1 1 260px; display: flex; align-items: center; gap: 8px;
+  height: 44px; padding: 0 14px; border: 2px solid transparent; border-radius: var(--radius-btn);
+  background: var(--surface-2); color: var(--text-muted);
+}
+.search:focus-within { border-color: var(--violet); }
+.search input { flex: 1; min-width: 0; border: 0; outline: none; background: none; color: var(--text); font: inherit; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips :global(.chip) { padding: 6px 12px; font-size: 13px; }
+.small { flex: 0 1 140px; }

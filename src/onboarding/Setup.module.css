@@ -1,0 +1,24 @@
+.page { min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px; }
+.box { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 24px; }
+.progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.progress span { height: 6px; border-radius: 999px; background: var(--surface-2); transition: background 300ms; }
+.progress .on { background: var(--grad-hero); }
+.stepLabel { font-size: 13px; color: var(--text-muted); }
+.title { font-size: clamp(26px, 5vw, 36px); }
+.avatars { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.avatars button { aspect-ratio: 1; border: 2px solid transparent; border-radius: 14px; background: var(--surface-2); font-size: 26px; cursor: pointer; }
+.avatars button[aria-pressed='true'] { border-color: var(--violet); }
+.currencies { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; }
+.choice {
+  padding: 16px; border: 2px solid var(--border); border-radius: var(--radius-btn);
+  background: var(--surface); color: var(--text); font: 600 16px var(--font-body); text-align: left; cursor: pointer;
+}
+.choice[aria-pressed='true'] { border-color: var(--violet); background: color-mix(in srgb, var(--violet) 12%, var(--surface)); }
+.choice small { display: block; margin-top: 4px; color: var(--text-muted); font-weight: 400; }
+.modes { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+.accountRow { display: grid; gap: 8px; grid-template-columns: 1.4fr 1fr 1fr auto; align-items: end; }
+.actions { display: flex; justify-content: space-between; gap: 12px; }
+@media (max-width: 520px) {
+  .accountRow { grid-template-columns: 1fr 1fr; }
+  .modes { grid-template-columns: 1fr; }
+}

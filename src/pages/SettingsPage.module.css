@@ -1,0 +1,9 @@
+.sections { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+.section { display: flex; flex-direction: column; gap: 16px; }
+.avatars { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.avatars button {
+  aspect-ratio: 1; border: 2px solid transparent; border-radius: 14px;
+  background: var(--surface-2); font-size: 24px; cursor: pointer;
+}
+.avatars button[aria-pressed='true'] { border-color: var(--violet); }
+.danger:global(.card) { border-color: color-mix(in srgb, var(--pink) 40%, var(--border)); }

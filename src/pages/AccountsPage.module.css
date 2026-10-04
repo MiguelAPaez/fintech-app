@@ -1,0 +1,11 @@
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.card { display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+.card:global(.card) { border-top-width: 4px; } /* beats the global .card border shorthand */
+.top { display: flex; align-items: center; justify-content: space-between; }
+.name { font-size: 18px; }
+.balance { font: 700 32px var(--font-display); letter-spacing: -0.02em; }
+.negative { color: var(--pink); }
+.swatches { display: flex; gap: 10px; }
+.swatch { width: 32px; height: 32px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; }
+.swatch[aria-pressed='true'] { border-color: var(--text); }
+@media (hover: hover) { .card:hover { transform: translateY(-2px); box-shadow: var(--glow); } }
